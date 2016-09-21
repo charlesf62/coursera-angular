@@ -8,18 +8,36 @@ angular.module('LunchCheck', [])
 LunchCheckController.$inject = ['$scope'];
 
 function LunchCheckController ($scope) {
-    var inputClient = $scope.listItems;
-    var Items = inputClient.split(",");
-    var nbreItems = Items.length;
 
-    if (nbreItems == 0){
-        $scope.message = "Please enter data first";
-    } else if (nbreItems > 3){
-        $scope.message = "Too much!";
-    } else {
-        $scope.message = "Enjoy!";
-    }
-return $scope.message;
+    $scope.checkIfTooMuch = function(){
+        if ($scope.inputtext === undefined
+            || $scope.inputtext.length === 0)
+        {
+            $scope.message =  "Please enter data first";
+        }
+        else {
+            var InputItems = $scope.inputtext.split(",");
+            var stripedList = [];
+
+            for(var i=0, j= InputItems.length; i < j; i++)
+            {
+                if (InputItems[i].trim() !== "")
+                {
+                    stripedList.push(InputItems[i]);
+                }
+            }
+
+            if (stripedList.length <= 3)
+            {
+                $scope.message =  "Enjoy!";
+            }
+            else
+            {
+                $scope.message = "Too much!";
+            }
+        }
+
+    };
 }
-
 })();
+
